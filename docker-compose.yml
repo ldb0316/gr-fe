@@ -1,5 +1,5 @@
 services:
-  next-app:
+  gr-fe:
     build:
       context: . # 현재 디렉토리(root) 에 있는 파일들을 빌드 대상으로 적용
       dockerfile: Dockerfile # 빌드 시 사용할 Dockerfile 파일 지정

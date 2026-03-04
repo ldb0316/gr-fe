@@ -7,6 +7,10 @@ export default function Home() {
       <h1>Hello World4</h1>
       <h1>Hello World5</h1>
       <h1>Hello World6</h1>
+      <h1>Hello World7</h1>
+      <h1>Hello World8</h1>
+      <h1>Hello World9</h1>
+      <h1>Hello World10</h1>
     </div>
   )
 }

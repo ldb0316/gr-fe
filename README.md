@@ -67,7 +67,7 @@ cd workspace
 git --version
 
 git config --global user.name "[영문이니셜]"
-git config --global user.email "[이메일]"
+git config --global user.email "[회사이메일]"
 ```
 
 #### 8. WSL2 내부에 소스코드 clone
@@ -134,6 +134,18 @@ cd gr-fe
 3. 끝
 ```
 
-## Q2. 난 머리아파서 못하겠다
-* 로컬에 node 22 LTS 설치하고 개발하시면됩니다.
-* 환경 차이로 인한 버그나 예상치 못한 오류는 본인이 책임지시면됩니다.
+
+# vs code 개발환경 세팅가이드
+#### 1. Extension 설치
+* Dev Containers
+> 개발환경 구축을 위함
+>> Docker Container 환경에 VSCode를 접속시키기 위한 용도
+* WSL
+> 개발환경 구축을 위함
+>> WSL 환경에 VSCode를 접속시키기 위한 용도
+* Prettier - Code formatter (필수)
+> ```Ctrl + Shift + P``` -> ```Format Document With...``` -> ```Prettier - Code formatter``` 선택
+>> ```Ctrl + ,``` -> 검색창에 ```format on save``` 검색 -> ```Editor: Format On Save``` 체크
+* Windsurf Plugin (옵션)
+> Windsurf Plugin은 ai기반 코드 자동완성 기능 사용을 위한 확장임
+> > 보안 관련 설정이 필요하므로 개별문의

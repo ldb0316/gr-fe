@@ -148,3 +148,4 @@ cd gr-fe
 >> ```Ctrl + ,``` -> 검색창에 ```format on save``` 검색 -> ```Editor: Format On Save``` 체크
 * Windsurf Plugin (옵션)
 > Windsurf Plugin은 ai기반 코드 자동완성 기능 사용을 위한 확장임
+> > 보안 관련 설정이 필요하므로 개별문의

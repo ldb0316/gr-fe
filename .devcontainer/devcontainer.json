@@ -6,10 +6,7 @@
 		"../docker-compose.yml"
 	],
 	"service": "gr-fe",
-	"workspaceFolder": "/app",
-	"features": {
-		"ghcr.io/devcontainers/features/git:1": {}
-	}
+	"workspaceFolder": "/app"
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

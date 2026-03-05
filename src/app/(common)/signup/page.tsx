@@ -11,6 +11,7 @@ import {
   Paper,
   InputAdornment,
   IconButton,
+  Link,
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -133,17 +134,17 @@ const SignupPage = () => {
             >
               로그인
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
+            <Grid container justifyContent="space-between">
+              <Grid >
                 <Link href="#" variant="body2">
                   비밀번호 찾기
                 </Link>
               </Grid>
-              <Grid item>
+              <Grid>
                 <Link href="#" variant="body2">
                   {'계정이 없으신가요? 회원가입'}
                 </Link>
-              </Grid> */}
+              </Grid>
             </Grid>
           </Box>
         </Paper>

@@ -37,7 +37,6 @@ const SignupPage = () => {
         const data = await response.json()
         console.log('Login successful:', data)
       }
-      
     } catch (error) {
       console.error('Login failed:', error)
     }
@@ -133,7 +132,7 @@ const SignupPage = () => {
               로그인
             </Button>
             <Grid container justifyContent="space-between">
-              <Grid >
+              <Grid>
                 <Link href="#" variant="body2">
                   비밀번호 찾기
                 </Link>

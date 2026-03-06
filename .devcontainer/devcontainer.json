@@ -15,9 +15,26 @@
         "Codeium.codeium",
         "dbaeumer.vscode-eslint", // ESLint 지원
         "ms-vscode.vscode-typescript-next" // 핵심: TS/JS 언어 서버
-      ]
+      ],
+      "settings": {
+        "git.confirmSync": false,
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "git.autofetch": true,
+        "js/ts.updateImportsOnFileMove.enabled": "always",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
     }
   }
+
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

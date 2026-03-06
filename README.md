@@ -1,4 +1,4 @@
-# 세팅가이드
+# A. 기반환경 세팅가이드
 
 #### 1. 관리자 권한으로 PowerShell 열고 WSL 설치 및 Ubuntu 배포판 자동 설치 후 재부팅
 ``` PowerShell
@@ -73,33 +73,37 @@ git config --global user.email "[회사이메일]"
 #### 8. WSL2 내부에 소스코드 clone
 ``` Bash
 # /home/[영문이니셜]/workspace 경로에서 수행 (과정을 정상적으로 따라했다면 이미 그 경로임)
+# /mnt/ 로 시작하는 경로가 아님에 주의해야함!!! 
+# /home/[영문이니셜]/workspace 경로는 wsl 전용 내부경로이기 때문에 윈도우 파일시스템의 영향이 없어 I/O속도가 5~10배 빠르다.
 git clone 
 cd gr-fe
 ```
 
+#### 9. VSCode에 Extension 설치
+* Dev Containers
+* WSL
+
 #### 9. VSCode 나 Cursor를 WSL에 연결 및 container 기반 개발환경에 접속 (각 개발자는 9-A 만 수행하세요)
 #### 9-A. 접속 가이드
-* VSCode 실행
-* 좌측 하단 ```><``` 아이콘 클릭
-* Connect to WSL 선택 (안될경우 WSL Extension 설치 후 재시도)
-* Dev Containsers Extension 설치
-> 설치 후 Extension목록에서 local-installed 쪽에 설치될건데, ```install in WSL: Ubuntu``` 버튼이 보인다면 반드시 눌러주어야함
-* Container Tools Extension 설치
-* Explorer 탭으로 넘어와서 Open Folder 선택
-* 프로젝트 경로 선택 후 OK 버튼 클릭 ```예시 : /home/lee/workspace/gr-fe```
-* ```Ctrl + ~ ``` 눌러서 커맨드 창 열고 ```docker compose up -d```
-* docker 컨테이너 실행이 완료되면 우측 하단에 나오는 팝업에서 Reopen in container 클릭
+* cmd 열기
+* wsl 열기
+``` batch
+wsl
+```
+* 프로젝트 workspace 경로로 이동 
+``` Bash
+cd ~ 
+cd workspace/gr-fe/
+```
+* vscode 실행
+``` Bash
+code .
+````
+* VSCode 켜지고 나서 우측 하단에 나오는 팝업에서 Reopen in container 클릭
 > 팝업이 안뜬다면 왼쪽 하단 ```><``` 아이콘 누르거나, ```Ctrl + Shift + P``` 눌러서 ```Dev Containers: Reopen in Container``` 직접 선택
 
 #### 9-B. Dev Container 세팅 가이드 (최초세팅 시에만 수행. 각 개발자는 수행하지 않습니다. 세팅가이드를 참조하는 개발자는 이 항목을 무시해주세요)
-* 좌측 하단 ```><``` 아이콘 클릭
-* Connect to WSL 선택 (안될경우 WSL Extension 설치 후 재시도)
-* Dev Containsers Extension 설치
-> 설치 후 Extension목록에서 local-installed 쪽에 설치될건데, ```install in WSL: Ubuntu``` 버튼이 보인다면 반드시 눌러주어야함
-* Container Tools Extension 설치
-* Explorer 탭으로 넘어와서 Open Folder 선택
-* 프로젝트 경로 선택 후 OK 버튼 클릭 ```예시 : /home/lee/workspace/gr-fe```
-* ```Ctrl + ~ ``` 눌러서 커맨드 창 열고 ```docker compose up -d```
+* 9-A 와 동일하게 접속 후(Reopen in container 만 제외)
 * ```Ctrl + Shift + P``` -> ```Dev Containers: Add Dev Container Configuration Files...``` 선택
 * ```From 'docker-compose.yml'``` 선택
 * 이후 나오는 옵션은 선택하지 말고 전부 OK클릭
@@ -107,12 +111,45 @@ cd gr-fe
 * 프로젝트 루트 경로에 생성된 ```.devcontainer``` 내부 devcontainer.json 내용 수정
 ``` json
 {
-	"name": "GR-FE Dev Container",
-	"dockerComposeFile": [
-		"../docker-compose.yml"
-	],
-	"service": "gr-fe",
-	"workspaceFolder": "/app"
+  "name": "GR-FE Dev Container",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "gr-fe",
+  "workspaceFolder": "/app",
+  // 컨테이너 접속 시 서버 자동 실행 (npm run restart를 위해 세팅함)
+  "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && npm install", // npm install을 dockerfile과 함께 여기에도 두는 이유는, git pull로 인해 package.json이 변경되었을경우 컨테이너 리빌드만 하면 알아서 처리되기때문
+  "postStartCommand": "npm run dev",
+  "customizations": {
+    "vscode": {
+      // 해당하는 extension(확장) 을 컨테이너 접속 시에 자동으로 설치해준다
+      // 단, attach to running container 를 이용하여 접근할 경우 동작하지 않으므로 주의 필요.
+      // 적용되지않을경우 rebuild container 시에 다시 적용해준다
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "Codeium.codeium",
+        "dbaeumer.vscode-eslint", // ESLint 지원
+        "ms-vscode.vscode-typescript-next" // 핵심: TS/JS 언어 서버
+      ],
+      // 해당 설정을 VSCode에 자동으로 적용해준다.
+      // 단, attach to running container 를 이용하여 접근할 경우 동작하지 않으므로 주의 필요.
+      // 적용되지않을경우 rebuild container 시에 다시 적용해준다
+      "settings": {
+        "git.confirmSync": false,
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "git.autofetch": true,
+        "js/ts.updateImportsOnFileMove.enabled": "always",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  }
 }
 ```
 * 우측 하단에 나오는 팝업에서 Reopen in container 클릭
@@ -135,7 +172,7 @@ cd gr-fe
 ```
 
 
-# vs code 개발환경 세팅가이드
+# B. vs code 개발환경 세팅가이드
 #### 1. Extension 설치
 * Dev Containers
 > 개발환경 구축을 위함
@@ -143,9 +180,20 @@ cd gr-fe
 * WSL
 > 개발환경 구축을 위함
 >> WSL 환경에 VSCode를 접속시키기 위한 용도
-* Prettier - Code formatter (필수)
-> ```Ctrl + Shift + P``` -> ```Format Document With...``` -> ```Prettier - Code formatter``` 선택
->> ```Ctrl + ,``` -> 검색창에 ```format on save``` 검색 -> ```Editor: Format On Save``` 체크
-* Windsurf Plugin (옵션)
-> Windsurf Plugin은 ai기반 코드 자동완성 기능 사용을 위한 확장임
-> > 보안 관련 설정이 필요하므로 개별문의
+* 기타
+> Prettier - Code formatter 와 Windsurf Plugin은 컨테이너 접속 시 자동 설치되도록 세팅함 별도 설치 필요 X
+
+
+# C. 개발 관련 가이드
+#### 1. 프론트엔드 node 로그 확인
+* VSCode 좌측 ```Remote Explorer``` 클릭
+* ```DEV CONTAINERS``` 항목 안에 있는 ```gr-fe``` 우클릭 -> ```show container log``` 선택
+
+#### 2. 프로젝트에 패키지 추가 필요시(package.json 변동 필요 시)
+| 순서 | 작업 내용 | 실행 위치 | 실행 명령어 (예시) | 비고 |
+|:---:|:---|:---:|:---|:---|
+| **1** | **패키지 설치** | **컨테이너 내부 콘솔<br/>(VSCode에서 Ctrl+`)** | `npm install [패키지명]` | `package.json`과 `lock` 파일이 호스트와 동기화됨 |
+| **2** | **동작 확인** | **로그 콘솔 및 브라우저<br/>(로그콘솔 확인방법은 C-1 참고)** | - | 로그에서 HMR(재빌드) 확인 and 브라우저에서 원하는 기능 동작확인 |
+| **3** | **환경 동기화** | **컨테이너 내부 콘솔<br/>(VSCode에서 Ctrl+`)** | `npm run restart` 또는 `(Ctrl+C로 종료후) npm run dev` | 자동 반영 안 될 경우 프로세스만 강제 재시작 |
+| **4** | **Git push** | **호스트 PC WSL 또는<br/>VSCode Source Control 탭 또는<br/>컨테이너 내부 콘솔<br/>(VSCode에서 Ctrl+`)** | - | **`package.json`,`package-lock.json`** |
+| **5** | **이미지 최신화** | **호스트 PC WSL** | `docker compose up -d --build` | 로컬 이미지를 최신 상태로 빌드 |

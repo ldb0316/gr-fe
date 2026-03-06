@@ -7,7 +7,7 @@
   "workspaceFolder": "/app",
   // 컨테이너 접속 시 서버 자동 실행 (npm run restart를 위해 세팅함)
   "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && npm install", // npm install을 dockerfile과 함께 여기에도 두는 이유는, git pull로 인해 package.json이 변경되었을경우 컨테이너 리빌드만 하면 알아서 처리되기때문
-  "postStartCommand": "npm run dev",
+  // "postStartCommand": "npm run dev",
   "customizations": {
     "vscode": {
       "extensions": [

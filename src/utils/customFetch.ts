@@ -13,7 +13,6 @@ export const customFetch = async (url: string, options: RequestInit = {}) => {
     const data = await response.json().catch(() => ({}))
 
     if (!response.ok) {
-      const errorMessage = data.message
       switch (data.status) {
         case 400:
           toast.error(data.message)

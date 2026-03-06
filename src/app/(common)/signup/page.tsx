@@ -16,6 +16,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useState } from 'react'
+import { customFetch } from '@/utils/customFetch'
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -28,18 +29,15 @@ const SignupPage = () => {
     console.log('Login attempt with ID:', lgnId, 'and Password:', pswd)
 
     try {
-      const response = await fetch('/api-be/user/signin', {
+      const response = await customFetch('/api-be/user/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ lgnId, pswd }),
       })
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
+      if (response.ok) {
+        const data = await response.json()
+        console.log('Login successful:', data)
       }
-      const data = await response.json()
-      console.log('Login successful:', data)
+      
     } catch (error) {
       console.error('Login failed:', error)
     }

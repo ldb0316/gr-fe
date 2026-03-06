@@ -184,8 +184,8 @@ code .
 > Prettier - Code formatter 와 Windsurf Plugin은 컨테이너 접속 시 자동 설치되도록 세팅함 별도 설치 필요 X
 
 
-# C. 개발 관련 가이드
-#### 1. 프론트엔드 node 로그 확인
+# C. 기타 개발 관련 가이드
+#### 1. container 로그 확인
 * VSCode 좌측 ```Remote Explorer``` 클릭
 * ```DEV CONTAINERS``` 항목 안에 있는 ```gr-fe``` 우클릭 -> ```show container log``` 선택
 

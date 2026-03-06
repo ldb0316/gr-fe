@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # dockerfile은 실행환경만 담당하도록 한다.
-# CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev"]

@@ -10,12 +10,18 @@
   "postStartCommand": "npm run dev",
   "customizations": {
     "vscode": {
+      // 해당하는 extension(확장) 을 컨테이너 접속 시에 자동으로 설치해준다
+      // 단, attach to running container 를 이용하여 접근할 경우 동작하지 않으므로 주의 필요.
+      // 적용되지않을경우 rebuild container 시에 다시 적용해준다
       "extensions": [
         "esbenp.prettier-vscode",
         "Codeium.codeium",
         "dbaeumer.vscode-eslint", // ESLint 지원
         "ms-vscode.vscode-typescript-next" // 핵심: TS/JS 언어 서버
       ],
+      // 해당 설정을 VSCode에 자동으로 적용해준다.
+      // 단, attach to running container 를 이용하여 접근할 경우 동작하지 않으므로 주의 필요.
+      // 적용되지않을경우 rebuild container 시에 다시 적용해준다
       "settings": {
         "git.confirmSync": false,
         "[typescriptreact]": {

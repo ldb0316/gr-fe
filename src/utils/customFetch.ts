@@ -1,4 +1,3 @@
-import { toast } from 'react-hot-toast'
 import { responseAction } from './responseAction'
 
 export const customFetch = async (url: string, options: RequestInit = {}) => {

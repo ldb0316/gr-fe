@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 interface RouteState {
   // 로그인 화면으로 route
-  routeSignupPage: boolean
-  setRouteSignupPage: (val: boolean) => void
+  routeSigninPage: boolean
+  setRouteSigninPage: (val: boolean) => void
   // 메인 화면으로 route
   routeMainPage: boolean
   setRouteMainPage: (val: boolean) => void
@@ -16,8 +16,8 @@ interface RouteState {
 }
 
 export const useRouteStore = create<RouteState>((set) => ({
-  routeSignupPage: false,
-  setRouteSignupPage: (val) => set({ routeSignupPage: val }),
+  routeSigninPage: false,
+  setRouteSigninPage: (val) => set({ routeSigninPage: val }),
   routeMainPage: false,
   setRouteMainPage: (val) => set({ routeMainPage: val }),
   routeChangePasswordPage: false,

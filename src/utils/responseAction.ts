@@ -1,47 +1,73 @@
 import { useRouteStore } from '@/store/useRouteStore'
 import { customFetch } from './customFetch'
 import { customToast } from './customToast'
+import { useAuthStore } from '@/store/useAuthStore'
+import { AuthResponse } from '@/global/types/AuthResponse'
 
 interface ResponseAction {
   [key: number]: DetailAction
 }
 
+interface DetailActionParams {
+  message?: string
+  data?: unknown
+  retry?: () => Promise<unknown>
+}
+
 interface DetailAction {
-  [key: string]: (message?: string) => DetailActionResult
+  [key: string]: (detailActionParams: DetailActionParams) => DetailActionResult
 }
 
 interface DetailActionResult {
   throw: boolean
-  recursiveFunc?: () => void
+  recursiveFunc?: () => Promise<unknown>
 }
 
 const HTTP_CODE_200: DetailAction = {
-  '0_200': (message) => {
-    if (message) customToast.success(message)
+  '0_200': (params) => {
+    if (params.message) customToast.success(params.message)
     return {
       throw: false,
     }
   },
-  '1_200': (message) => {
-    if (message) customToast.success(message)
+  '1_200': (params) => {
+    if (params.message) customToast.success(params.message)
     return {
       throw: false,
     }
   },
-  '2_200': (message) => {
-    if (message) customToast.success(message)
+  '2_200': (params) => {
+    if (params.message) customToast.success(params.message)
     return {
       throw: false,
     }
   },
-  '3_200': (message) => {
-    if (message) customToast.success(message)
+  '3_200': (params) => {
+    if (params.message) customToast.success(params.message)
     return {
       throw: false,
     }
   },
-  '4_200': () => {
-    // TODO jwt 정보 세팅
+  '4_200': (params) => {
+    // jwt 정보 세팅
+    // first issued jwt (로그인)
+    if (params.data) {
+      const tokenData = params.data as AuthResponse
+      useAuthStore.getState().setAccessToken(tokenData.data.accessToken)
+      if (params.message) customToast.success(params.message) // 로그인시에는 로그인 메시징 처리
+    }
+
+    return {
+      throw: false,
+    }
+  },
+  '5_200': (params) => {
+    // reissued jwt
+    if (params.data) {
+      const tokenData = params.data as AuthResponse
+      useAuthStore.getState().setAccessToken(tokenData.data.accessToken)
+      // 재발급시에는 메시징 처리 없이 조용히 진행한다.
+    }
     return {
       throw: false,
     }
@@ -49,111 +75,111 @@ const HTTP_CODE_200: DetailAction = {
 }
 
 const HTTP_CODE_400: DetailAction = {
-  '0_400': (message) => {
-    if (message) customToast.error(message)
+  '0_400': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
-  '1_400': (message) => {
-    if (message) customToast.error(message)
+  '1_400': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
-  '2_400': (message) => {
-    if (message) customToast.error(message)
+  '2_400': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_401: DetailAction = {
-  '0_401': (message) => {
+  '0_401': (params) => {
     //trigger - login
-    if (message) customToast.warn(message)
-    useRouteStore.getState().setRouteSignupPage(true)
+    if (params.message) customToast.warn(params.message)
+    useRouteStore.getState().setRouteSigninPage(true)
     return {
       throw: true,
     }
   },
-  '1_401': (message) => {
-    if (message) customToast.error(message)
+  '1_401': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
-  '2_401': (message) => {
-    if (message) customToast.error(message)
+  '2_401': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
-  '3_401': () => {
-    //TODO trigger - reissue
+  '3_401': (params) => {
     return {
       throw: false,
-      recursiveFunc: () => {
-        return customFetch('/api-be/user/reissue', {
+      recursiveFunc: async () => {
+        await customFetch('/api-be/user/reissue', {
           method: 'POST',
         })
+        return await params.retry?.()
       },
     }
   },
-  '4_401': (message) => {
+  '4_401': (params) => {
     //trigger - login
-    if (message) customToast.error(message)
-    useRouteStore.getState().setRouteSignupPage(true)
+    if (params.message) customToast.error(params.message)
+    useRouteStore.getState().setRouteSigninPage(true)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_403: DetailAction = {
-  '0_403': (message) => {
-    if (message) customToast.error(message)
+  '0_403': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
-  '1_403': (message) => {
+  '1_403': (params) => {
     // trigger - main page
-    if (message) customToast.error(message)
+    if (params.message) customToast.error(params.message)
     useRouteStore.getState().setRouteMainPage(true)
     return {
       throw: true,
     }
   },
-  '2_403': (message) => {
-    if (message) customToast.warn(message)
+  '2_403': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
-  '3_403': (message) => {
-    if (message) customToast.warn(message)
+  '3_403': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
-  '4_403': (message) => {
+  '4_403': (params) => {
     // trigger - change password
-    if (message) customToast.warn(message)
+    if (params.message) customToast.warn(params.message)
     useRouteStore.getState().setRouteChangePasswordPage(true)
     return {
       throw: true,
     }
   },
-  '5_403': (message) => {
-    if (message) customToast.warn(message)
+  '5_403': (params) => {
+    if (params.message) customToast.warn(params.message)
     useRouteStore.getState().setRouteMainPage(true)
     return {
       throw: true,
     }
   },
-  '6_403': (message) => {
-    // trigger - reauthorize
-    if (message) customToast.warn(message)
+  '6_403': (params) => {
+    // trigger - 본인인증 다시 하고 계정 잠금 해제
+    if (params.message) customToast.warn(params.message)
     useRouteStore.getState().setRouteReauthorizePage(true)
     return {
       throw: true,
@@ -161,52 +187,52 @@ const HTTP_CODE_403: DetailAction = {
   },
 }
 const HTTP_CODE_404: DetailAction = {
-  '0_404': (message) => {
-    if (message) customToast.error(message)
+  '0_404': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_405: DetailAction = {
-  '0_405': (message) => {
-    if (message) customToast.error(message)
+  '0_405': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_409: DetailAction = {
-  '0_409': (message) => {
-    if (message) customToast.warn(message)
+  '0_409': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
-  '1_409': (message) => {
-    if (message) customToast.warn(message)
+  '1_409': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
-  '2_409': (message) => {
-    if (message) customToast.warn(message)
+  '2_409': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_429: DetailAction = {
-  '0_429': (message) => {
-    if (message) customToast.warn(message)
+  '0_429': (params) => {
+    if (params.message) customToast.warn(params.message)
     return {
       throw: true,
     }
   },
 }
 const HTTP_CODE_500: DetailAction = {
-  '0_500': (message) => {
-    if (message) customToast.error(message)
+  '0_500': (params) => {
+    if (params.message) customToast.error(params.message)
     return {
       throw: true,
     }

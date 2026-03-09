@@ -12,15 +12,15 @@ import { useEffect } from 'react'
  */
 const AutoRouteProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
-  const { routeSignupPage, setRouteSignupPage } = useRouteStore(
+  const { routeSigninPage, setRouteSigninPage } = useRouteStore(
     (state) => state,
   )
   useEffect(() => {
-    if (routeSignupPage) {
-      router.push('/signup')
-      setRouteSignupPage(false)
+    if (routeSigninPage) {
+      router.push('/signin')
+      setRouteSigninPage(false)
     }
-  }, [routeSignupPage, router, setRouteSignupPage])
+  }, [routeSigninPage, router, setRouteSigninPage])
 
   const { routeMainPage, setRouteMainPage } = useRouteStore((state) => state)
   useEffect(() => {

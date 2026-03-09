@@ -17,34 +17,28 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useState } from 'react'
 import { customFetch } from '@/utils/customFetch'
+import { useRouter } from 'next/navigation'
 
-const SignupPage = () => {
+const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const [pswd, setPswd] = useState('')
   const [lgnId, setLgnId] = useState('')
 
+  const router = useRouter()
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    console.log('Login attempt with ID:', lgnId, 'and Password:', pswd)
 
     try {
-      const response = await customFetch('/api-be/user/signin', {
+      await customFetch('/api-be/user/signin', {
         method: 'POST',
         body: JSON.stringify({ lgnId, pswd }),
       })
-      if (response.ok) {
-        const data = await response.json()
-        console.log('Login successful:', data)
-      }
+      router.push('/sample')
     } catch (error) {
       console.error('Login failed:', error)
     }
   }
-
-  //   useEffect(() => {
-  //     console.log(pswd, lgnId)
-  //   }, [pswd, lgnId])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -156,4 +150,4 @@ const SignupPage = () => {
   )
 }
 
-export default SignupPage
+export default SigninPage

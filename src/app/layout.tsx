@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter' // �
 import ThemeRegistry from '@/components/theme/ThemeRegistry'
 import { Toaster } from 'react-hot-toast'
 import AutoRouteProvider from '@/components/auth/AutoRouteProvider'
+import AuthInitializer from '@/components/auth/AuthInitializer'
 
 export default function RootLayout({
   children,
@@ -14,7 +15,9 @@ export default function RootLayout({
         {/* MUI 스타일 캐시가 서버와 클라이언트에서 일치하도록 보장합니다 */}
         <AppRouterCacheProvider>
           <ThemeRegistry>
-            <AutoRouteProvider>{children}</AutoRouteProvider>
+            <AutoRouteProvider>
+              <AuthInitializer>{children}</AuthInitializer>
+            </AutoRouteProvider>
           </ThemeRegistry>
         </AppRouterCacheProvider>
         <Toaster position="top-center" reverseOrder={false} />

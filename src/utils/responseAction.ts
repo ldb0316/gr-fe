@@ -1,6 +1,6 @@
 import { useRouteStore } from '@/store/useRouteStore'
-import { toast } from 'react-hot-toast'
 import { customFetch } from './customFetch'
+import { customToast } from './customToast'
 
 interface ResponseAction {
   [key: number]: DetailAction
@@ -17,25 +17,25 @@ interface DetailActionResult {
 
 const HTTP_CODE_200: DetailAction = {
   '0_200': (message) => {
-    if (message) toast.success(message)
+    if (message) customToast.success(message)
     return {
       throw: false,
     }
   },
   '1_200': (message) => {
-    if (message) toast.success(message)
+    if (message) customToast.success(message)
     return {
       throw: false,
     }
   },
   '2_200': (message) => {
-    if (message) toast.success(message)
+    if (message) customToast.success(message)
     return {
       throw: false,
     }
   },
   '3_200': (message) => {
-    if (message) toast.success(message)
+    if (message) customToast.success(message)
     return {
       throw: false,
     }
@@ -50,19 +50,19 @@ const HTTP_CODE_200: DetailAction = {
 
 const HTTP_CODE_400: DetailAction = {
   '0_400': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
   },
   '1_400': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
   },
   '2_400': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
@@ -71,20 +71,20 @@ const HTTP_CODE_400: DetailAction = {
 const HTTP_CODE_401: DetailAction = {
   '0_401': (message) => {
     //trigger - login
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     useRouteStore.getState().setRouteSignupPage(true)
     return {
       throw: true,
     }
   },
   '1_401': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
   },
   '2_401': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
@@ -102,7 +102,7 @@ const HTTP_CODE_401: DetailAction = {
   },
   '4_401': (message) => {
     //trigger - login
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     useRouteStore.getState().setRouteSignupPage(true)
     return {
       throw: true,
@@ -111,41 +111,41 @@ const HTTP_CODE_401: DetailAction = {
 }
 const HTTP_CODE_403: DetailAction = {
   '0_403': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
   },
   '1_403': (message) => {
     // trigger - main page
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     useRouteStore.getState().setRouteMainPage(true)
     return {
       throw: true,
     }
   },
   '2_403': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
   },
   '3_403': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
   },
   '4_403': (message) => {
     // trigger - change password
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     useRouteStore.getState().setRouteChangePasswordPage(true)
     return {
       throw: true,
     }
   },
   '5_403': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     useRouteStore.getState().setRouteMainPage(true)
     return {
       throw: true,
@@ -153,7 +153,7 @@ const HTTP_CODE_403: DetailAction = {
   },
   '6_403': (message) => {
     // trigger - reauthorize
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     useRouteStore.getState().setRouteReauthorizePage(true)
     return {
       throw: true,
@@ -162,7 +162,7 @@ const HTTP_CODE_403: DetailAction = {
 }
 const HTTP_CODE_404: DetailAction = {
   '0_404': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
@@ -170,7 +170,7 @@ const HTTP_CODE_404: DetailAction = {
 }
 const HTTP_CODE_405: DetailAction = {
   '0_405': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }
@@ -178,19 +178,19 @@ const HTTP_CODE_405: DetailAction = {
 }
 const HTTP_CODE_409: DetailAction = {
   '0_409': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
   },
   '1_409': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
   },
   '2_409': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
@@ -198,7 +198,7 @@ const HTTP_CODE_409: DetailAction = {
 }
 const HTTP_CODE_429: DetailAction = {
   '0_429': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.warn(message)
     return {
       throw: true,
     }
@@ -206,7 +206,7 @@ const HTTP_CODE_429: DetailAction = {
 }
 const HTTP_CODE_500: DetailAction = {
   '0_500': (message) => {
-    if (message) toast.error(message)
+    if (message) customToast.error(message)
     return {
       throw: true,
     }

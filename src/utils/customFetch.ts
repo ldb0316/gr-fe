@@ -14,7 +14,13 @@ export const customFetch = async (url: string, options: RequestInit = {}) => {
   })
 
   const data = await response.json().catch(() => ({}))
-
+  if (
+    !response.ok &&
+    response.status === 500 &&
+    (!data.status || !data.message)
+  ) {
+    throw new Error('요청 실패: 네트워크 연결을 확인해주세요')
+  }
   const result = responseAction[data.status][data.statusDetail]({
     message: data.message,
     data: data,

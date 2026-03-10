@@ -19,7 +19,8 @@ export const syncFrontMenus = async ({ useCache }: { useCache?: boolean }) => {
       const result = await response.json().catch(() => ({}))
       setMenuVersion(result.data.version)
       setMenus(result.data.menus)
-      console.log(result)
+    } else {
+      console.error(`메뉴 동기화 실패: 네트워크 연결을 확인해주세요`)
     }
   } catch (error) {
     console.error('메뉴 동기화 실패', error)

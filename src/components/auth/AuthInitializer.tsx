@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const authStore = useAuthStore((state) => state)
+  const { setAccessToken } = useAuthStore((state) => state)
   useEffect(() => {
     const initAuth = async () => {
       setLoading(true)
@@ -15,15 +15,15 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
         await customFetch('/api-be/user/reissue', {
           method: 'POST',
         })
-      } catch (error) {
-        authStore.setAccessToken('')
+      } catch {
+        setAccessToken('')
       } finally {
         setLoading(false)
       }
     }
 
     initAuth()
-  }, [])
+  }, [setAccessToken])
 
   if (loading) return <CircularProgress />
   return <>{children}</>

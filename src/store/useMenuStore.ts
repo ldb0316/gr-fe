@@ -1,3 +1,4 @@
+import picomatch from 'picomatch'
 import { create } from 'zustand'
 
 interface Menu {
@@ -25,6 +26,7 @@ interface Menu {
 
 interface MenuState {
   menus: Menu[]
+  matchers: picomatch.Matcher[]
   setMenus: (val: Menu[]) => void
   menuVersion: number
   setMenuVersion: (val: number) => void
@@ -32,7 +34,11 @@ interface MenuState {
 
 export const useMenuStore = create<MenuState>((set) => ({
   menus: [],
-  setMenus: (val) => set({ menus: val }),
+  matchers: [],
+  setMenus: (val) => {
+    const matchers = val.map((menu) => picomatch(menu.urlAddr))
+    set({ menus: val, matchers: matchers })
+  },
   menuVersion: 0,
   setMenuVersion: (val) => set({ menuVersion: val }),
 }))

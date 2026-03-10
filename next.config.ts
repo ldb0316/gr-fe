@@ -1,17 +1,17 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-
+  // reactStrictMode: false,
   async rewrites() {
     return [
       {
-        source: "/api-be/:path*",
+        source: '/api-be/:path*',
         destination: `${process.env.API_DOMAIN}/:path*`,
       },
-    ];
-  }
-};
+    ]
+  },
+}
 
-export default nextConfig;
+export default nextConfig

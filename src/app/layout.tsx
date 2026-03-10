@@ -3,6 +3,7 @@ import ThemeRegistry from '@/components/theme/ThemeRegistry'
 import { Toaster } from 'react-hot-toast'
 import AutoRouteProvider from '@/components/auth/AutoRouteProvider'
 import AuthInitializer from '@/components/auth/AuthInitializer'
+import MenuGuard from '@/components/auth/MenuGuard'
 
 export default function RootLayout({
   children,
@@ -16,7 +17,9 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeRegistry>
             <AutoRouteProvider>
-              <AuthInitializer>{children}</AuthInitializer>
+              <AuthInitializer>
+                <MenuGuard>{children}</MenuGuard>
+              </AuthInitializer>
             </AutoRouteProvider>
           </ThemeRegistry>
         </AppRouterCacheProvider>

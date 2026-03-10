@@ -24,7 +24,6 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
         }
 
         // 메뉴 정보 동기화
-        console.log('메뉴 초기화')
         await syncFrontMenus({
           useCache: true,
         })

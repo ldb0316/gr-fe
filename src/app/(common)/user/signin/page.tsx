@@ -38,9 +38,9 @@ const SigninPage = () => {
       await syncFrontMenus({
         useCache: false,
       })
-      router.push('/sample')
+      router.push('/main')
     } catch (error) {
-      console.error('Login failed:', error)
+      console.error('로그인 실패:', error)
     }
   }
 

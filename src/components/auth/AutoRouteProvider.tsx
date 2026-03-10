@@ -17,7 +17,7 @@ const AutoRouteProvider = ({ children }: { children: React.ReactNode }) => {
   )
   useEffect(() => {
     if (routeSigninPage) {
-      router.push('/signin')
+      router.replace('/user/signin')
       setRouteSigninPage(false)
     }
   }, [routeSigninPage, router, setRouteSigninPage])
@@ -25,7 +25,7 @@ const AutoRouteProvider = ({ children }: { children: React.ReactNode }) => {
   const { routeMainPage, setRouteMainPage } = useRouteStore((state) => state)
   useEffect(() => {
     if (routeMainPage) {
-      router.push('/')
+      router.replace('/main')
       setRouteMainPage(false)
     }
   }, [routeMainPage, router, setRouteMainPage])

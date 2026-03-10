@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import { useState } from 'react'
 
-const SamplePage = () => {
+const MainPage = () => {
   const [apiData, setData] = useState('')
   const { menus } = useMenuStore((state) => state)
   const router = useRouter()
@@ -19,15 +19,17 @@ const SamplePage = () => {
   const routeToSignin = () => {
     router.push('/user/signin')
   }
-  const routeToMain = () => {
-    router.push('/main')
+
+  const routeToSample = () => {
+    router.push('/sample')
   }
+
   return (
     <>
-      <h1>하이</h1>
+      <h1>여기 메인페이지임</h1>
       <Button onClick={requestApi}>api요청</Button>
       <Button onClick={routeToSignin}>로그인페이지</Button>
-      <Button onClick={routeToMain}>메인페이지</Button>
+      <Button onClick={routeToSample}>샘플페이지</Button>
       <hr />
       <div>{JSON.stringify(apiData)}</div>
       <hr />
@@ -42,4 +44,4 @@ const SamplePage = () => {
   )
 }
 
-export default SamplePage
+export default MainPage

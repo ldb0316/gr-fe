@@ -21,7 +21,7 @@ const eslintConfig = defineConfig([
 
   // 2. customFetch.ts 파일에서만 해당 규칙 예외 처리
   {
-    files: ['**/customFetch.ts'],
+    files: ['**/customFetch.ts', '**/syncMenu.ts'],
     rules: {
       'no-restricted-syntax': 'off',
     },

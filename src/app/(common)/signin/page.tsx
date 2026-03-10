@@ -18,6 +18,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useState } from 'react'
 import { customFetch } from '@/utils/customFetch'
 import { useRouter } from 'next/navigation'
+import { syncFrontMenus } from '@/utils/syncMenu'
 
 const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -33,6 +34,9 @@ const SigninPage = () => {
       await customFetch('/api-be/user/signin', {
         method: 'POST',
         body: JSON.stringify({ lgnId, pswd }),
+      })
+      await syncFrontMenus({
+        useCache: false,
       })
       router.push('/sample')
     } catch (error) {

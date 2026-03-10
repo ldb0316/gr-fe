@@ -1,4 +1,5 @@
 'use client'
+import { useMenuStore } from '@/store/useMenuStore'
 import { customFetch } from '@/utils/customFetch'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/navigation'
@@ -7,6 +8,7 @@ import { useState } from 'react'
 
 const SamplePage = () => {
   const [apiData, setData] = useState('')
+  const { menus } = useMenuStore((state) => state)
   const router = useRouter()
   const requestApi = async () => {
     const data = await customFetch('/api-be/adm/menu', {
@@ -24,7 +26,13 @@ const SamplePage = () => {
       <Button onClick={requestApi}>api요청</Button>
       <Button onClick={routeToSignin}>로그인페이지</Button>
       <hr />
-      <div>{JSON.stringify(apiData)}</div>
+      <div>
+        {menus.map((menu) => (
+          <div key={menu.menuTsid}>
+            {menu.menuNm + '(' + menu.menuAcsAuthrtCd + ')'}
+          </div>
+        ))}
+      </div>
     </>
   )
 }

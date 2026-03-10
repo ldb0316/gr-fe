@@ -26,6 +26,8 @@ const SamplePage = () => {
       <Button onClick={requestApi}>api요청</Button>
       <Button onClick={routeToSignin}>로그인페이지</Button>
       <hr />
+      <div>{JSON.stringify(apiData)}</div>
+      <hr />
       <div>
         {menus.map((menu) => (
           <div key={menu.menuTsid}>

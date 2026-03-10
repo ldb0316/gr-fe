@@ -1,7 +1,6 @@
 'use client'
 
 import { useAuthStore } from '@/store/useAuthStore'
-import { useMenuStore } from '@/store/useMenuStore'
 import { getCookie } from '@/utils/cookieUtils'
 import { customFetch } from '@/utils/customFetch'
 import { syncFrontMenus } from '@/utils/syncMenu'
@@ -10,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const { accessToken, setAccessToken } = useAuthStore((state) => state)
+  const { setAccessToken } = useAuthStore((state) => state)
 
   useEffect(() => {
     const initAuth = async () => {

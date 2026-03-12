@@ -35,9 +35,6 @@ const SigninPage = () => {
         method: 'POST',
         body: JSON.stringify({ lgnId, pswd }),
       })
-      await syncFrontMenus({
-        useCache: false,
-      })
       router.push('/main')
     } catch (error) {
       console.error('로그인 실패:', error)

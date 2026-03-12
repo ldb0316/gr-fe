@@ -4,6 +4,7 @@ export interface AuthResponse {
   message: string
   data: {
     accessToken: string
+    sessionTimeoutDateTime: string
   }
   timestamp: string
 }

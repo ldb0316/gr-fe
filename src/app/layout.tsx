@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import AutoRouteProvider from '@/components/auth/AutoRouteProvider'
 import AuthInitializer from '@/components/auth/AuthInitializer'
 import MenuGuard from '@/components/auth/MenuGuard'
+import SessionTimeout from '@/components/auth/SessionTimeout'
 
 export default function RootLayout({
   children,
@@ -18,7 +19,9 @@ export default function RootLayout({
           <ThemeRegistry>
             <AutoRouteProvider>
               <AuthInitializer>
-                <MenuGuard>{children}</MenuGuard>
+                <SessionTimeout>
+                  <MenuGuard>{children}</MenuGuard>
+                </SessionTimeout>
               </AuthInitializer>
             </AutoRouteProvider>
           </ThemeRegistry>

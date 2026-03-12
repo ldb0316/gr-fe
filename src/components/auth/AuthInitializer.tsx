@@ -5,16 +5,19 @@ import { getCookie } from '@/utils/cookieUtils'
 import { customFetch } from '@/utils/customFetch'
 import { syncFrontMenus } from '@/utils/syncMenu'
 import { CircularProgress } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const { setAccessToken } = useAuthStore((state) => state)
+  const { isSignedIn, setAccessToken } = useAuthStore((state) => state)
+
+  const isFirstMounted = useRef(false)
 
   useEffect(() => {
     const initAuth = async () => {
       setLoading(true)
       try {
+        // 새로고침 시에도 동작을 보장하도록 하기 위해서 isSignedIn state가 아닌 쿠키를 활용한다.
         const hasRefreshToken = getCookie('hasRefreshToken') === 'true'
 
         if (hasRefreshToken) {
@@ -23,19 +26,28 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
           })
         }
 
-        // 메뉴 정보 동기화
+        // 최초마운트 메뉴 정보 동기화
         await syncFrontMenus({
           useCache: true,
         })
       } catch {
         setAccessToken('')
       } finally {
+        isFirstMounted.current = true
         setLoading(false)
       }
     }
 
     initAuth()
   }, [setAccessToken])
+
+  useEffect(() => {
+    if (!isFirstMounted.current) return
+    // 로그인 상태가 변경되면 메뉴 정보 동기화
+    syncFrontMenus({
+      useCache: false,
+    })
+  }, [isSignedIn])
 
   if (loading) return <CircularProgress />
   return <>{children}</>

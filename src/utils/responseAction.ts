@@ -53,7 +53,7 @@ const HTTP_CODE_200: DetailAction = {
     // first issued jwt (로그인)
     if (params.data) {
       const tokenData = params.data as AuthResponse
-      useAuthStore.getState().setAccessToken(tokenData.data.accessToken)
+      useAuthStore.getState().setSignedIn(tokenData)
       if (params.message) customToast.success(params.message) // 로그인시에는 로그인 메시징 처리
     }
 
@@ -65,7 +65,7 @@ const HTTP_CODE_200: DetailAction = {
     // reissued jwt
     if (params.data) {
       const tokenData = params.data as AuthResponse
-      useAuthStore.getState().setAccessToken(tokenData.data.accessToken)
+      useAuthStore.getState().setSignedIn(tokenData)
       // 재발급시에는 메시징 처리 없이 조용히 진행한다.
     }
     return {
@@ -116,6 +116,7 @@ const HTTP_CODE_401: DetailAction = {
     }
   },
   '3_401': (params) => {
+    // TODO 쿠키에서 hasRefreshToken 확인하고 있으면 재발급, 없으면 4_401로 이동
     return {
       throw: false,
       recursiveFunc: async () => {

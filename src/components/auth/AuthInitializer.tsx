@@ -5,7 +5,7 @@ import { getCookie } from '@/utils/cookieUtils'
 import { customFetch } from '@/utils/customFetch'
 import { syncFrontMenus } from '@/utils/syncMenu'
 import { CircularProgress } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)

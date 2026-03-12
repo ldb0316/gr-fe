@@ -5,7 +5,6 @@ import { getCookie } from '@/utils/cookieUtils'
 import { customFetch } from '@/utils/customFetch'
 import { customToast } from '@/utils/customToast'
 import { signOut } from '@/utils/signOut'
-import { syncFrontMenus } from '@/utils/syncMenu'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/navigation'
 
@@ -35,7 +34,6 @@ const MainPage = () => {
     accessToken,
     sessionTimeoutMessage,
     isSignedIn,
-    setSignedOut,
   } = useAuthStore((state) => state)
 
   const signTest = () => {

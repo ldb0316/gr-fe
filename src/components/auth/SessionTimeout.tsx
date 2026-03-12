@@ -1,6 +1,5 @@
 'use client'
 import { useAuthStore } from '@/store/useAuthStore'
-import { customFetch } from '@/utils/customFetch'
 import { customToast } from '@/utils/customToast'
 import { signOut } from '@/utils/signOut'
 import { useEffect } from 'react'

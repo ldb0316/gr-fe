@@ -18,7 +18,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useState } from 'react'
 import { customFetch } from '@/utils/customFetch'
 import { useRouter } from 'next/navigation'
-import { syncFrontMenus } from '@/utils/syncMenu'
 
 const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false)

@@ -1,5 +1,4 @@
 'use client'
-import SessionTimeout from '@/components/auth/SessionTimeout'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useMenuStore } from '@/store/useMenuStore'
 import { getCookie } from '@/utils/cookieUtils'

@@ -2,6 +2,7 @@
 import { useAuthStore } from '@/store/useAuthStore'
 import { customFetch } from '@/utils/customFetch'
 import { customToast } from '@/utils/customToast'
+import { signOut } from '@/utils/signOut'
 import { useEffect } from 'react'
 
 const SessionTimeout = ({ children }: { children: React.ReactNode }) => {
@@ -16,12 +17,7 @@ const SessionTimeout = ({ children }: { children: React.ReactNode }) => {
     if (!isSignedIn) return
     if (sessionTimeoutMills <= 0) {
       customToast.info('장시간 미사용으로 자동 로그아웃 되었습니다.')
-      // TODO 로그아웃 및 routing 처리
-      customFetch('/api-be/user/signout', {
-        method: 'POST',
-      }).finally(() => {
-        setSignedOut()
-      })
+      signOut() // 로그아웃
       return
     }
 

@@ -9,9 +9,9 @@ import { useEffect, useRef, useState } from 'react'
 
 const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true)
-  const { isSignedIn, setAccessToken } = useAuthStore((state) => state)
+  const { setAccessToken } = useAuthStore((state) => state)
 
-  const isFirstMounted = useRef(false)
+  // const isFirstMounted = useRef(false)
 
   useEffect(() => {
     const initAuth = async () => {
@@ -33,7 +33,7 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
       } catch {
         setAccessToken('')
       } finally {
-        isFirstMounted.current = true
+        // isFirstMounted.current = true
         setLoading(false)
       }
     }
@@ -41,15 +41,21 @@ const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
     initAuth()
   }, [setAccessToken])
 
-  useEffect(() => {
-    if (!isFirstMounted.current) return
-    // 로그인 상태가 변경되면 메뉴 정보 동기화
-    syncFrontMenus({
-      useCache: false,
-    })
-  }, [isSignedIn])
+  // useEffect(() => {
+  //   if (!isFirstMounted.current) return
+  //   // 로그인 상태가 변경되면 메뉴 정보 동기화
+  //   syncFrontMenus({
+  //     useCache: false,
+  //   })
+  // }, [isSignedIn])
 
-  if (loading) return <CircularProgress />
+  if (loading)
+    return (
+      <>
+        <CircularProgress />
+        <div>접근 권한 확인중...</div>
+      </>
+    )
   return <>{children}</>
 }
 

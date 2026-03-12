@@ -17,10 +17,12 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useState } from 'react'
 import { customFetch } from '@/utils/customFetch'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { syncFrontMenus } from '@/utils/syncMenu'
 
 const SigninPage = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const searchParams = useSearchParams()
 
   const [pswd, setPswd] = useState('')
   const [lgnId, setLgnId] = useState('')
@@ -34,7 +36,24 @@ const SigninPage = () => {
         method: 'POST',
         body: JSON.stringify({ lgnId, pswd }),
       })
-      router.push('/main')
+
+      await syncFrontMenus({
+        useCache: false,
+      })
+
+      const redirectPath = searchParams.get('redirect')
+      if (redirectPath) {
+        const decodedRedirectPath = decodeURIComponent(redirectPath)
+        const isValidPath =
+          decodedRedirectPath.startsWith('/') &&
+          !decodedRedirectPath.startsWith('//')
+        if (isValidPath) {
+          router.replace(decodedRedirectPath)
+          return
+        }
+      }
+
+      router.replace('/main')
     } catch (error) {
       console.error('로그인 실패:', error)
     }

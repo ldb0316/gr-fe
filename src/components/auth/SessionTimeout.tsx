@@ -15,7 +15,9 @@ const SessionTimeout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!isSignedIn) return
     if (sessionTimeoutMills <= 0) {
-      customToast.info('장시간 미사용으로 자동 로그아웃 되었습니다.')
+      customToast.info('장시간 미사용으로 자동 로그아웃 되었습니다.', {
+        id: 'session-timeout',
+      })
       signOut() // 로그아웃
       return
     }

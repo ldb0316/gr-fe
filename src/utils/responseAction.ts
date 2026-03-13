@@ -72,6 +72,13 @@ const HTTP_CODE_200: DetailAction = {
       throw: false,
     }
   },
+  '6_200': (params) => {
+    // 로그아웃
+    if (params.message) customToast.success(params.message)
+    return {
+      throw: false,
+    }
+  },
 }
 
 const HTTP_CODE_400: DetailAction = {

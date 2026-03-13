@@ -1,10 +1,10 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter' // 패키지 설치 확인
 import ThemeRegistry from '@/components/theme/ThemeRegistry'
-import { Toaster } from 'react-hot-toast'
 import AutoRouteProvider from '@/components/auth/AutoRouteProvider'
 import AuthInitializer from '@/components/auth/AuthInitializer'
 import MenuGuard from '@/components/auth/MenuGuard'
 import SessionTimeout from '@/components/auth/SessionTimeout'
+import CustomToaster from '@/components/toast/CustomToaster'
 
 export default function RootLayout({
   children,
@@ -26,7 +26,7 @@ export default function RootLayout({
             </AutoRouteProvider>
           </ThemeRegistry>
         </AppRouterCacheProvider>
-        <Toaster position="top-center" reverseOrder={false} />
+        <CustomToaster />
       </body>
     </html>
   )

@@ -34,9 +34,11 @@ export const useAuthStore = create<AuthState>((set) => ({
       const sessionTimeoutDateTime = new Date(state.sessionTimeoutDateTime)
       const now = new Date()
       const diffInMs = sessionTimeoutDateTime.getTime() - now.getTime()
+      const seconds = Math.floor(diffInMs / 1000)
+      const message = `로그인 시간이 ${seconds <= 0 ? 0 : seconds} 초 남았습니다.`
       return {
         sessionTimeoutMills: diffInMs,
-        sessionTimeoutMessage: `로그인 시간이 ${Math.floor(diffInMs / 1000)} 초 남았습니다.`,
+        sessionTimeoutMessage: message,
       }
     })
   },
@@ -46,12 +48,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     const sessionTimeoutDateTime = new Date(val.data.sessionTimeoutDateTime)
     const now = new Date()
     const diffInMs = sessionTimeoutDateTime.getTime() - now.getTime()
+    const seconds = Math.floor(diffInMs / 1000)
+    const message = `로그인 시간이 ${seconds <= 0 ? 0 : seconds} 초 남았습니다.`
     set({
       isSignedIn: true,
       accessToken: val.data.accessToken,
       sessionTimeoutDateTime: val.data.sessionTimeoutDateTime,
       sessionTimeoutMills: diffInMs,
-      sessionTimeoutMessage: `로그인 시간이 ${Math.floor(diffInMs / 1000)} 초 남았습니다.`,
+      sessionTimeoutMessage: message,
     })
   },
 }))

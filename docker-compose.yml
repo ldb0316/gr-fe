@@ -21,3 +21,9 @@ services:
     stdin_open: true
     restart: unless-stopped
     command: tail -f /dev/null # npm run restart를 위해 추가. npm run dev가 pid 1번이 아니게 함
+    networks:
+      - private-network
+
+networks:
+  private-network:
+    external: true

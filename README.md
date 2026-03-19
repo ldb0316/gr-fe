@@ -85,7 +85,7 @@ git config --global user.email "[회사이메일]"
 # /home/[영문이니셜]/workspace 경로에서 수행 (과정을 정상적으로 따라했다면 이미 그 경로임)
 # /mnt/ 로 시작하는 경로가 아님에 주의해야함!!! 
 # /home/[영문이니셜]/workspace 경로는 wsl 전용 내부경로이기 때문에 윈도우 파일시스템의 영향이 없어 I/O속도가 5~10배 빠르다.
-git clone 
+git clone https://github.com/ldb0316/my-fe.git
 cd my-fe
 ```
 </details>

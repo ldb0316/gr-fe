@@ -77,7 +77,7 @@ cd workspace
 git --version
 
 git config --global user.name "[영문이니셜]"
-git config --global user.email "[회사이메일]"
+git config --global user.email "[이메일]"
 ```
 
 #### 2. WSL2 내부에 소스코드 clone
